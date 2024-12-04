@@ -150,6 +150,7 @@ function App() {
                     <input
                       type="checkbox"
                       name="published"
+                      clasName="ms-2"
                       checked={newPost.published}
                       onChange={handleInput}
                     />
@@ -163,25 +164,33 @@ function App() {
             </form>
           </div>
           <div className="row">
-            <ul className="list-group col-4">
-              {posts.map((post, i) => (
-                <li key={i} className="list-group-item">
-                  <b>{post.autore}: </b>
-                  {post.contenuto}
-                  <div className="img-fluid">
-                    <img src={post.immagine} className=" my-2" />
+            {posts.map((post, i) => (
+              <div key={i} className="col-md-4 mb-4">
+                <div className="card h-100">
+                  <img
+                    src={post.immagine}
+                    className="card-img-top"
+                    alt="Post"
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title">{post.autore}</h5>
+                    <p className="card-text">{post.contenuto}</p>
+                    <p>Categoria: {post.categoria}</p>
                   </div>
-                  <div className="div">
-                    <p>Categoria: </p>
-                    <p className="text-success fw-bold">{post.categoria}</p>
+                  <div className="card-footer d-flex justify-content-between">
+                    <button className="btn btn-secondary btn-sm">
+                      Modifica titolo
+                    </button>
+                    <button
+                      className="btn btn-warning btn-sm"
+                      onClick={() => handleDelete(i)}
+                    >
+                      Cancella
+                    </button>
                   </div>
-                  <button className="ms-2">Modifica titolo</button>
-                  <button className="ms-2" onClick={() => handleDelete(i)}>
-                    Cancella
-                  </button>
-                </li>
-              ))}
-            </ul>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
