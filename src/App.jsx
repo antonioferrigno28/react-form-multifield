@@ -44,6 +44,7 @@ function App() {
       autore: currentAuthor,
       contenuto: currentContent,
       immagine: currentImg,
+      categoria: currentCategory,
     });
     console.log("ao" + " " + value + " " + name);
     console.log(newPost.autore, newPost.contenuto);
@@ -58,6 +59,7 @@ function App() {
       !newPost.categoria ||
       !newPost.immagine
     ) {
+      console.log(newPost);
       alert("Hai lasciato un campo vuoto");
       return;
     }
