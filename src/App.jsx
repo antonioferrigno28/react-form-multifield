@@ -8,6 +8,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////
 import { useState } from "react";
 import postsData from "./data/posts";
+import { useEffect } from "react";
 
 function App() {
   const [newPost, setNewPost] = useState({
@@ -20,34 +21,44 @@ function App() {
 
   const [posts, setPosts] = useState(postsData);
 
+  useEffect(() => {
+    if (newPost.published) {
+      alert("Articolo Pubblico");
+    } else {
+      alert("Articolo privato");
+    }
+  }, [newPost.published]);
+
   function handleInput(e) {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     let currentAuthor = newPost.autore;
     let currentContent = newPost.contenuto;
     let currentImg = newPost.immagine;
     let currentCategory = newPost.categoria;
-    //modifichiamo autore o content?
+    let currentPublished = newPost.published;
+
     if (name === "autore") {
       currentAuthor = value;
-      console.log("modifying author with value " + " " + value);
+      console.log("modifying author with value " + value);
     } else if (name === "contenuto") {
       currentContent = value;
     } else if (name === "immagine") {
       currentImg = value;
     } else if (name === "categoria") {
       currentCategory = value;
+    } else if (name === "published" && type === "checkbox") {
+      currentPublished = checked;
     }
-
-    //aggiorno valore
 
     setNewPost({
       autore: currentAuthor,
       contenuto: currentContent,
       immagine: currentImg,
       categoria: currentCategory,
+      published: currentPublished,
     });
-    console.log("ao" + " " + value + " " + name);
-    console.log(newPost.autore, newPost.contenuto);
+
+    console.log(newPost);
   }
 
   function handleSubmit(e) {
@@ -64,8 +75,17 @@ function App() {
       return;
     }
 
-    setPosts([...posts, newPost]);
-    setNewPost({ autore: "", contenuto: "", immagine: "", categoria: "" });
+    const updatedPosts = [...posts, newPost];
+    setPosts(updatedPosts);
+
+    setNewPost({
+      autore: "",
+      contenuto: "",
+      immagine: "",
+      categoria: "",
+      published: true,
+    });
+    console.log(updatedPosts);
   }
 
   function handleDelete(i) {
@@ -124,6 +144,17 @@ function App() {
                     <option value="Giochi">Giochi</option>
                     <option value="Tv">Tv</option>
                   </select>
+                </div>
+                <div className="col-4">
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="published"
+                      checked={newPost.published}
+                      onChange={handleInput}
+                    />
+                    Vuoi che il post sia pubblico?
+                  </label>
                 </div>
                 <div className="col-4">
                   <button className="btn btn-primary">Invia</button>
