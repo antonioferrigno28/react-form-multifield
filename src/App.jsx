@@ -118,6 +118,7 @@ function App() {
                     onChange={handleInput}
                     value={newPost.categoria}
                   >
+                    <option value="">Seleziona una categoria</option>
                     <option value="Ozio">Ozio</option>
                     <option value="Scoperte">Scoperte</option>
                     <option value="Giochi">Giochi</option>
@@ -138,6 +139,10 @@ function App() {
                   {post.contenuto}
                   <div className="img-fluid">
                     <img src={post.immagine} className=" my-2" />
+                  </div>
+                  <div className="div">
+                    <p>Categoria: </p>
+                    <p className="text-success fw-bold">{post.categoria}</p>
                   </div>
                   <button className="ms-2">Modifica titolo</button>
                   <button className="ms-2" onClick={() => handleDelete(i)}>
